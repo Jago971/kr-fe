@@ -1,5 +1,5 @@
 // src/components/SignUpForm.tsx
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 interface FormData {
   username: string;
@@ -9,9 +9,9 @@ interface FormData {
 
 const SignUpForm: React.FunctionComponent = () => {
   const [formData, setFormData] = useState<FormData>({
-    username: '',
-    email: '',
-    password: '',
+    username: "",
+    email: "",
+    password: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,11 +22,7 @@ const SignUpForm: React.FunctionComponent = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
-    setFormData({
-      username: '',
-      email: '',
-      password: '',
-    });
+    setFormData({ username: "", email: "", password: "" });
   };
 
   return (

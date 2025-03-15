@@ -2,12 +2,12 @@ import React from "react";
 import SignUpForm from "../components/SignUpForm";
 import AuthLayout from "../layouts/Auth";
 
-const SignUp: React.FunctionComponent = () => {
+const SignIn: React.FunctionComponent = () => {
   return (
-    <AuthLayout title="Sign Up">
+    <AuthLayout title="Sign In">
         <SignUpForm />
     </AuthLayout>
   );
 };
 
-export default SignUp;
+export default SignIn;
