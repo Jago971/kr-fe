@@ -22,6 +22,11 @@ const SignUpForm: React.FunctionComponent = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(formData);
+    setFormData({
+      username: '',
+      email: '',
+      password: '',
+    });
   };
 
   return (
