@@ -1,11 +1,11 @@
 import React from "react";
-import SignUpForm from "../components/SignUpForm";
 import AuthLayout from "../layouts/Auth";
+import SignInForm from "../components/SignInForm";
 
 const SignIn: React.FunctionComponent = () => {
   return (
     <AuthLayout title="Sign In">
-        <SignUpForm />
+      <SignInForm title="Sign In" />
     </AuthLayout>
   );
 };

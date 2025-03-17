@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
-* {
-    border: solid 1px black;
+/* * {
+  border: solid 1px black;
+} */
+
+body {
+    font-family: "Pangolin", sans-serif;
+}
+
+.logo {
+  font-family: "Baloo 2", sans-serif;
 }

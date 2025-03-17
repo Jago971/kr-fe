@@ -1,4 +1,3 @@
-// src/components/SignUpForm.tsx
 import React, { useState } from "react";
 
 interface FormData {
@@ -7,7 +6,11 @@ interface FormData {
   password: string;
 }
 
-const SignUpForm: React.FunctionComponent = () => {
+interface SignUpFormProps {
+  title: string;
+}
+
+const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({title}) => {
   const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
@@ -26,8 +29,9 @@ const SignUpForm: React.FunctionComponent = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
       <input
+        className="border rounded-md p-2 border-neutral-800"
         type="text"
         name="username"
         value={formData.username}
@@ -36,6 +40,7 @@ const SignUpForm: React.FunctionComponent = () => {
         required
       />
       <input
+        className="border rounded-md p-2 border-neutral-800"
         type="email"
         name="email"
         value={formData.email}
@@ -44,6 +49,7 @@ const SignUpForm: React.FunctionComponent = () => {
         required
       />
       <input
+        className="border rounded-md p-2 border-neutral-800"
         type="password"
         name="password"
         value={formData.password}
@@ -51,7 +57,9 @@ const SignUpForm: React.FunctionComponent = () => {
         placeholder="Password"
         required
       />
-      <button type="submit">Sign Up</button>
+      <button className="p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-md" type="submit">
+        {title}
+      </button>
     </form>
   );
 };
