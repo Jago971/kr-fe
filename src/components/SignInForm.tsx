@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { data, useNavigate } from "react-router-dom";
+import { loginUser } from "../api/auth";
 
 interface FormData {
   username: string;
@@ -10,20 +12,32 @@ interface SignInFormProps {
 }
 
 const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
   });
+  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({ username: "", password: "" });
+    setError(null);
+
+    try {
+      const data = await loginUser(formData.username, formData.password);
+      alert(data.message);
+      navigate('/home');
+      setFormData({ username: "", password: "" });
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "An unknown error occurred");
+    }
+    
+    
   };
 
   return (
@@ -47,6 +61,7 @@ const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
           placeholder="Password"
           required
         />
+        {error && <p className="text-red-500">{error}</p>}
         <button
           className="p-2 border-2  border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-md"
           type="submit"
@@ -54,7 +69,12 @@ const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
           {title}
         </button>
       </form>
-      <p className="text-center text-neutral-800">Don't have an account? <a className="underline" href="/signup">Sign up</a></p>
+      <p className="text-center text-neutral-800">
+        Don't have an account?{" "}
+        <a className="underline" href="/signup">
+          Sign up
+        </a>
+      </p>
     </>
   );
 };
