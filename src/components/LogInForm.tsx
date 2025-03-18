@@ -1,23 +1,23 @@
 import React, { useState } from "react";
-import { data, useNavigate } from "react-router-dom";
-import { loginUser } from "../api/auth";
+import { useNavigate } from "react-router-dom";
+import { authenticate } from "../services/authService";
 
 interface FormData {
   username: string;
   password: string;
 }
 
-interface SignInFormProps {
+interface LogInFormProps {
   title: string;
 }
 
-const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
+const LogInForm: React.FunctionComponent<LogInFormProps> = ({ title }) => {
   const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
   });
-  const [error, setError] = useState<string | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -29,15 +29,19 @@ const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
     setError(null);
 
     try {
-      const data = await loginUser(formData.username, formData.password);
+      const data = await authenticate("login", {
+        username: formData.username,
+        password: formData.password,
+      });
+
       alert(data.message);
-      navigate('/home');
+      navigate("/");
       setFormData({ username: "", password: "" });
     } catch (error) {
-      setError(error instanceof Error ? error.message : "An unknown error occurred");
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
     }
-    
-    
   };
 
   return (
@@ -79,4 +83,4 @@ const SignInForm: React.FunctionComponent<SignInFormProps> = ({ title }) => {
   );
 };
 
-export default SignInForm;
+export default LogInForm;

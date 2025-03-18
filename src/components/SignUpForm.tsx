@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { authenticate } from "../services/authService";
 
 interface FormData {
   username: string;
@@ -10,7 +12,9 @@ interface SignUpFormProps {
   title: string;
 }
 
-const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({title}) => {
+const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({ title }) => {
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     username: "",
     email: "",
@@ -22,10 +26,25 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({title}) => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
-    setFormData({ username: "", email: "", password: "" });
+    setError(null);
+
+    try {
+      const data = await authenticate("signup", {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password,
+      });
+
+      alert(data.message);
+      navigate("/");
+      setFormData({ username: "", email: "", password: "" });
+    } catch (error) {
+      setError(
+        error instanceof Error ? error.message : "An unknown error occurred"
+      );
+    }
   };
 
   return (
@@ -57,7 +76,11 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({title}) => {
         placeholder="Password"
         required
       />
-      <button className="p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-md" type="submit">
+      {error && <p className="text-red-500">{error}</p>}
+      <button
+        className="p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-md"
+        type="submit"
+      >
         {title}
       </button>
     </form>
