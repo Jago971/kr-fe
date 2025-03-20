@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BaseLayout } from "../layouts/Base";
 
-const Home: React.FunctionComponent = () => {
+const Messages: React.FunctionComponent = () => {
   const [loading, setLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userId, setUserId] = useState<number | null>(null);
@@ -12,7 +12,7 @@ const Home: React.FunctionComponent = () => {
     const checkAuthentication = async () => {
       try {
         const accessToken = localStorage.getItem("accessToken");
-        const response = await fetch("http://localhost:3002/home", {
+        const response = await fetch("http://localhost:3002/messages", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`, // Send the access token
@@ -52,9 +52,9 @@ const Home: React.FunctionComponent = () => {
 
   return (
     <BaseLayout>
-      <div>Welcome to the Home Page, user {userId}</div>
+      <div>Welcome to the Messages Page, user {userId}</div>
     </BaseLayout>
   );
 };
 
-export default Home;
+export default Messages;

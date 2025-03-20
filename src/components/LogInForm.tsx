@@ -34,9 +34,10 @@ const LogInForm: React.FunctionComponent<LogInFormProps> = ({ title }) => {
         password: formData.password,
       });
 
-      alert(data.message);
-      navigate("/");
+      if (data) alert(data.message);
+      
       setFormData({ username: "", password: "" });
+      navigate("/home");
     } catch (error) {
       setError(
         error instanceof Error ? error.message : "An unknown error occurred"

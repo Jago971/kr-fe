@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* * {
-  border: solid 1px black;
-} */
+* {
+  box-sizing: border-box;
+}
 
 body {
     font-family: "Pangolin", sans-serif;

@@ -1,5 +1,7 @@
+
+
 export interface LoginResponse {
-  token: string;
+  accessToken: string;
   message: string;
 }
 
@@ -12,7 +14,8 @@ interface AuthParams {
 export async function authenticate(
   action: "login" | "signup",
   { username, password, email }: AuthParams
-): Promise<LoginResponse> {
+): Promise<LoginResponse | void> {
+
   try {
     const url =
       action === "login"
@@ -29,30 +32,48 @@ export async function authenticate(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(body),
-      credentials: "include",
+      credentials: "include", // Include cookies (refresh token)
     });
 
-    if (!response.ok) {
+    if (response.ok) {
+      const data = await response.json();
+
+      // Handle signup and login separately
+      if (action === "signup") {
+        console.log("Signup successful:", data);
+        return; // No token to return for signup
+      }
+
+      // Handle login: store the access token and refresh token in cookies
+      console.log("Login successful:", data);
+      localStorage.setItem("accessToken", data.accessToken);
+      return data;
+    } else {
       const errorData = await response.json();
       throw new Error(
         errorData.message ||
           `${action.charAt(0).toUpperCase() + action.slice(1)} failed`
       );
     }
-
-    const data: LoginResponse = await response.json();
-    return data;
   } catch (error) {
     console.error(
-      `Error ${action === "login" ? "signing in" : "signing up"}:`,
+      `Error ${action === "login" ? "logging in" : "signing up"}:`,
       error
     );
+
+    // Ensure the error is properly thrown to be handled in the component
     if (error instanceof Error) {
       throw new Error(
-        `There was a problem ${action === "login" ? "logging in" : "signing up."} ${error.message}`
+        `There was a problem ${
+          action === "login" ? "logging in" : "signing up."
+        } ${error.message}`
       );
     } else {
-      throw new Error(`There was a problem ${action === "login" ? "logging in" : "signing up."}`);
+      throw new Error(
+        `There was a problem ${
+          action === "login" ? "logging in" : "signing up."
+        }`
+      );
     }
   }
 }
@@ -62,7 +83,6 @@ export const logout = async (): Promise<void> => {
     method: "POST",
   });
 };
-
 
 // export async function signIn(
 //   username: string,

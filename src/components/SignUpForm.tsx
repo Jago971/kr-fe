@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { authenticate } from "../services/authService";
 
 interface FormData {
@@ -13,7 +12,6 @@ interface SignUpFormProps {
 }
 
 const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({ title }) => {
-  const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -37,8 +35,8 @@ const SignUpForm: React.FunctionComponent<SignUpFormProps> = ({ title }) => {
         password: formData.password,
       });
 
-      alert(data.message);
-      navigate("/");
+      if (data) alert(data.message);
+
       setFormData({ username: "", email: "", password: "" });
     } catch (error) {
       setError(
