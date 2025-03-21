@@ -1,55 +1,53 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiMessageAlt } from "react-icons/bi";
 import { RiTaskLine } from "react-icons/ri";
 
-export const Nav = () => {
-  const [selectedIcon, setSelectedIcon] = useState<number | null>(null);
+interface NavProps {
+  handleClick: (component: "home" | "tasks" | "messages") => void;
+  activeComponent: "home" | "tasks" | "messages";
+}
 
-  useEffect(() => {
-    const currentPath = window.location.pathname.split("/")[1];
+export const Nav: React.FunctionComponent<NavProps> = ({
+  handleClick,
+  activeComponent,
+}) => {
+  const buttonStyling = "p-2 rounded-lg transition-all duration-300 cursor-pointer"
+  const unselectedStyle = "border-2 border-transparent text-neutral-400";
+  const selectedStyle =
+    "border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-lg shadow-md shadow-neutral-500";
 
-    if (currentPath === "home") {
-      setSelectedIcon(0); // Home is selected
-    } else if (currentPath === "tasks") {
-      setSelectedIcon(1); // Task is selected
-    } else if (currentPath === "messages") {
-      setSelectedIcon(2); // Message is selected
-    }
-  }, []); // Empty dependency array ensures this runs only once on mount
-
-  return (
-    <nav className="relative bg-orange-100 border-t-2 border-neutral-800 mt-auto w-full max-w-md flex justify-between items-center pb-2 pt-6 px-6">
-      <a href="/home" onClick={() => setSelectedIcon(0)}>
-        <AiOutlineHome
-          className={`text-5xl mx-2 ${
-            selectedIcon === 0 ? "text-neutral-800" : "text-neutral-400"
+    return (
+      <nav className="relative border-t-2 border-neutral-800 mt-auto w-full max-w-md flex justify-between items-center pb-2 pt-6 px-6">
+        {/* Home button */}
+        <button
+          onClick={() => handleClick("home")}
+          className={`${buttonStyling} ${
+            activeComponent === "home" ? selectedStyle : unselectedStyle
           }`}
-        />
-      </a>
-      <a href="/tasks" onClick={() => setSelectedIcon(1)}>
-        <RiTaskLine
-          className={`text-5xl mx-2 ${
-            selectedIcon === 1 ? "text-neutral-800" : "text-neutral-400"
+        >
+          <AiOutlineHome className="text-5xl" />
+        </button>
+  
+        {/* Tasks button */}
+        <button
+          onClick={() => handleClick("tasks")}
+          className={`${buttonStyling} ${
+            activeComponent === "tasks" ? selectedStyle : unselectedStyle
           }`}
-        />
-      </a>
-      <a href="/messages" onClick={() => setSelectedIcon(2)}>
-        <BiMessageAlt
-          className={`text-5xl mx-2 ${
-            selectedIcon === 2 ? "text-neutral-800" : "text-neutral-400"
+        >
+          <RiTaskLine className="text-5xl" />
+        </button>
+  
+        {/* Messages button */}
+        <button
+          onClick={() => handleClick("messages")}
+          className={`${buttonStyling} ${
+            activeComponent === "messages" ? selectedStyle : unselectedStyle
           }`}
-        />
-      </a>
-      <div
-        className={`absolute border h-8/10 aspect-square rounded-lg transition-all duration-500 ease-in-out ${
-          selectedIcon === 0
-            ? "left-6"
-            : selectedIcon === 1
-            ? "left-1/2 transform -translate-x-1/2"
-            : "right-6"
-        }`}
-      ></div>
-    </nav>
-  );
+        >
+          <BiMessageAlt className="text-5xl" />
+        </button>
+      </nav>
+    );
 };

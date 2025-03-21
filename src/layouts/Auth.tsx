@@ -1,22 +1,16 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import { Outlet } from "react-router-dom";
 import AppTitle from "../components/AppTitle";
+import Footer from "../components/Footer";
 
-interface AuthLayoutProps {
-  children: ReactNode;
-  title: string;
-}
-
-const AuthLayout: React.FunctionComponent<AuthLayoutProps> = ({
-  children,
-  title,
-}) => {
+const AuthLayout: React.FunctionComponent = () => {
   return (
     <div className="flex flex-col h-screen justify-center items-center p-16 gap-16 bg-orange-100">
       <AppTitle />
       <div className="w-full max-w-md flex flex-col gap-8">
-        <h1 className="text-center w-full max-w-md text-3xl border-b-2 border-neutral-800 text-neutral-800">{title}</h1>
-          {children}
+        <Outlet />
       </div>
+      <Footer />
     </div>
   );
 };
