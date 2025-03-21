@@ -1,10 +1,4 @@
-export interface LoginResponse {
-  status: string; // "success" or "error"
-  message: string;
-  userId: number | null;
-  accessToken: string | null;
-  redirect: boolean;
-}
+import { KindRemindResponse } from "../types/KindRemindResponse";
 
 interface AuthParams {
   username: string;
@@ -15,7 +9,7 @@ interface AuthParams {
 export async function authenticate(
   action: "login" | "signup",
   { username, password, email }: AuthParams
-): Promise<LoginResponse | void> {
+): Promise<KindRemindResponse | void> {
   try {
     const url =
       action === "login"

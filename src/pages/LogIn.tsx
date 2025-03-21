@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { authenticate } from "../services/authService";
+import { Link, useNavigate } from "react-router-dom";
+import { authenticate } from "../services/auth";
 
 interface FormData {
   username: string;
@@ -90,9 +90,9 @@ const LogIn: React.FunctionComponent = () => {
       </form>
       <p className="text-center text-neutral-800">
         Don't have an account?
-        <a className="underline cursor-pointer" href="/kind-remind/signup">
+        <Link to="/kind-remind/signup" className="underline cursor-pointer">
           Sign up
-        </a>
+        </Link>
       </p>
       {error && <p className="text-center text-red-500">{error}</p>}
     </>

@@ -25,7 +25,6 @@ const CoreLayout: React.FunctionComponent = () => {
     <div className="flex flex-col items-center h-screen p-4 gap-4 bg-orange-100">
       <Header></Header>
       <main className="border w-full max-w-md">
-        main
         {renderPage()}
       </main>
       <Nav
