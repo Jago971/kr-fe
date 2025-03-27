@@ -4,5 +4,4 @@ export interface KindRemindResponse {
   userId: number | null;
   accessToken: string | null;
   newAccessToken: string | null;
-  redirect: boolean;
 }

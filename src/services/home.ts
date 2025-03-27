@@ -4,9 +4,9 @@ export async function fetchHomeData(): Promise<KindRemindResponse | void> {
   const accessToken = localStorage.getItem("accessToken");
   console.log("Access token:", accessToken);
 
-  if (!accessToken) {
-    throw new Error("Access token is missing");
-  }
+  // if (!accessToken) {
+  //   throw new Error("Access token is missing");
+  // }
 
   try {
     const response = await fetch("http://localhost:3002/kind-remind/home", {

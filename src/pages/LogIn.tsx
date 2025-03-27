@@ -14,11 +14,11 @@ const LogIn: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [clicked, setClicked] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     username: "",
     password: "",
   });
-  const [clicked, setClicked] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -43,8 +43,8 @@ const LogIn: React.FunctionComponent = () => {
       if (data) {
         setFormData({ username: "", password: "" });
         alert(data.message);
-        if (data.redirect) navigate(`/kind-remind`);
-        // set userId in state here
+        navigate(`/kind-remind`);
+        // set userId in context here
       }
     } catch (error) {
       setError(
