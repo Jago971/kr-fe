@@ -13,19 +13,11 @@ const Home: React.FC = () => {
     const loadHomeData = async () => {
       try {
         const response = await fetchHomeData();
-
-        if (response) {
-          if (response.redirect) {
-            // Redirect if the response indicates so
-            navigate("/kind-remind/login");
-          } else {
-            // Set data if successful
-            setData(response);
-          }
-        }
+        if (response) setData(response);
       } catch (error) {
         setError("An error occurred while fetching home data.");
         console.error(error);
+        navigate("/kind-remind/login");
       }
     };
 

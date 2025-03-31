@@ -6,6 +6,7 @@ import LoadingScreen from "./components/loadingScreen";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import AuthLayout from "./layouts/Auth";
+import DashboardLayout from "./layouts/Dashboard";
 
 const App: React.FunctionComponent = () => {
   return (
@@ -21,7 +22,7 @@ const App: React.FunctionComponent = () => {
           </Route>
           
           {/* Core App inside CoreLayout */}
-          <Route path="kind-remind" element={<CoreLayout />} />
+          <Route path="kind-remind" element={<DashboardLayout />} />
       </Routes>
       </Suspense>
     </Router>

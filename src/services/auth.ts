@@ -29,23 +29,24 @@ export async function authenticate(
             credentials: "include", // Include cookies (refresh token)
         });
 
-        const data = await response.json();
+        const responseData = await response.json();
 
         if (response.status === 409) {
-            return data;
+            return responseData;
         }
 
         if (response.ok) {
             if (action === "login") {
+                console.log("data", responseData)
                 localStorage.setItem(
                     "accessToken",
-                    data.authentication.newAccessToken
+                    responseData.data.authentication.newAccessToken
                 );
             }
-            return data;
+            return responseData;
         }
 
-        throw new Error(data.message || `Error during ${action}`);
+        throw new Error(responseData.message || `Error during ${action}`);
     } catch (error) {
         console.error(`Error during ${action}:`, error);
 
