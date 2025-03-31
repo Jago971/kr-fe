@@ -1,7 +1,6 @@
 // src/App.tsx
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CoreLayout from "./layouts/Core";
 import LoadingScreen from "./components/loadingScreen";
 import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
@@ -22,7 +21,7 @@ const App: React.FunctionComponent = () => {
           </Route>
           
           {/* Core App inside CoreLayout */}
-          <Route path="kind-remind" element={<DashboardLayout />} />
+          <Route path="kind-remind/dashboard" element={<DashboardLayout />} />
       </Routes>
       </Suspense>
     </Router>

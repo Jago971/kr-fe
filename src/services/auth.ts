@@ -63,8 +63,11 @@ export async function authenticate(
     }
 }
 
-export const logout = async (): Promise<void> => {
-    await fetch("http://localhost:3002/kind-remind/logout", {
+export const logout = async (): Promise<KindRemindResponse | void> => {
+    const response = await fetch("http://localhost:3002/kind-remind/logout", {
         method: "POST",
+        credentials: "include",
     });
+    const responseData = await response.json();
+    return responseData;
 };

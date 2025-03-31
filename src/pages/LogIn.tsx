@@ -43,7 +43,7 @@ const LogIn: React.FunctionComponent = () => {
       if (data) {
         setFormData({ username: "", password: "" });
         alert(data.message);
-        navigate(`/kind-remind`);
+        navigate(`/kind-remind/dashboard`);
         // set userId in context here
       }
     } catch (error) {
