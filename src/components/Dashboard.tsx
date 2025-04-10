@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-import { fetchDashboardData } from "../services/dashboard";
-import { KindRemindResponse } from "../types/KindRemindResponse";
-import { useNavigate } from "react-router-dom";
-
 interface DashboardProps {
   activeComponent: "tasks" | "messages" | "home";
+  data: { [key: string]: any }
 }
 
-const Dashboard = ({ activeComponent }: DashboardProps) => {
-  const navigate = useNavigate();
-  const [data, setData] = useState<KindRemindResponse | null>(null);
-  const [error, setError] = useState<string | null>(null);
+const Dashboard = ({ activeComponent, data }: DashboardProps) => {
 
   const scrollComponent = () => {
     switch (activeComponent) {
@@ -22,23 +15,6 @@ const Dashboard = ({ activeComponent }: DashboardProps) => {
         return "translate-x-[0%]";
     }
   };
-
-  useEffect(() => {
-    const loadDashboardData = async () => {
-      try {
-        const response = await fetchDashboardData();
-        if (response) {
-          setData(response);
-        }
-      } catch (error) {
-        setError("An error occurred while fetching home data.");
-        console.error(error);
-        navigate("/kind-remind/login");
-      }
-    };
-
-    loadDashboardData();
-  }, []);
 
   return (
     <div className="border border-amber-600 h-full overflow-hidden">

@@ -6,23 +6,32 @@ import LogIn from "./pages/LogIn";
 import SignUp from "./pages/SignUp";
 import AuthLayout from "./layouts/Auth";
 import DashboardLayout from "./layouts/Dashboard";
+import CrudLayout from "./layouts/Crud";
+import Profile from "./pages/Profile";
+import VerifyEmail from "./pages/VerifyEmail";
 
 const App: React.FunctionComponent = () => {
   return (
     <Router>
       <Suspense fallback={<LoadingScreen />}>
-      <Routes>
+        <Routes>
           {/* Auth routes inside AuthLayout */}
-          <Route path="kind-remind/login" element={<AuthLayout />}>
-            <Route index element={<LogIn />} />
+          <Route path="kind-remind/" element={<AuthLayout />}>
+            <Route path="login" element={<LogIn />} />
+            <Route path="signup" element={<SignUp />} />
+            <Route path="verify-email" element={<VerifyEmail />} />
           </Route>
-          <Route path="kind-remind/signup" element={<AuthLayout />}>
-            <Route index element={<SignUp />} />
-          </Route>
-          
-          {/* Core App inside CoreLayout */}
+
+          {/* Core App inside DashboardLayout */}
           <Route path="kind-remind/dashboard" element={<DashboardLayout />} />
-      </Routes>
+
+          {/* Grouped Crud pages inside CrudLayout */}
+          <Route path="kind-remind/" element={<CrudLayout />}>
+            <Route path="profile" element={<Profile />} />
+            {/* <Route path="tasks" element={<Tasks />} />
+            <Route path="messages" element={<Messages />} /> */}
+          </Route>
+        </Routes>
       </Suspense>
     </Router>
   );

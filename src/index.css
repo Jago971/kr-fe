@@ -11,3 +11,12 @@ body {
 .logo {
   font-family: "Baloo 2", sans-serif;
 }
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none; /* Safari/Chrome */
+}
+
+.scrollbar-hidden {
+  -ms-overflow-style: none;  /* For Internet Explorer 10+ */
+  scrollbar-width: none; /* For Firefox */
+}

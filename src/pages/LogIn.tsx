@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { authenticate } from "../services/auth";
+import { authenticate, AuthError } from "../services/auth";
 
 interface FormData {
   username: string;
@@ -14,6 +14,7 @@ const LogIn: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isUnverified, setIsUnverified] = useState(false);
   const [clicked, setClicked] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     username: "",
@@ -35,21 +36,32 @@ const LogIn: React.FunctionComponent = () => {
     setIsLoading(true);
 
     try {
-      const data = await authenticate("login", {
+      const response = await authenticate("login", {
         username: formData.username,
         password: formData.password,
       });
 
-      if (data) {
+      alert(response?.message);
+
+      if (response && response.status === "success") {
         setFormData({ username: "", password: "" });
-        alert(data.message);
         navigate(`/kind-remind/dashboard`);
-        // set userId in context here
       }
-    } catch (error) {
-      setError(
-        error instanceof Error ? error.message : "An unknown error occurred"
-      );
+    } catch (error: any) {
+      if (error instanceof Error) {
+        if (error instanceof AuthError) {
+          if (error.status === 401) {
+            setIsUnverified(true);
+          } else {
+            setError(error.message);
+          }
+        } else {
+          // Regular error
+          setError(error.message);
+        }
+      } else {
+        setError("An unexpected error occurred.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -88,12 +100,20 @@ const LogIn: React.FunctionComponent = () => {
           {isLoading ? "Logging In..." : "Log in"}
         </button>
       </form>
-      <p className="text-center text-neutral-800">
-        Don't have an account?
-        <Link to="/kind-remind/signup" className="underline cursor-pointer">
-          Sign up
-        </Link>
-      </p>
+      {!isUnverified && (
+        <p className="text-center text-neutral-800">
+          📝 Don't have an account?
+          <Link to="/kind-remind/signup" className="underline cursor-pointer">
+            Sign up
+          </Link>
+        </p>
+      )}
+      {isUnverified && !isLoading && (
+        <div className="text-center text-neutral-800">
+          <p>❗ Your account is not verified!</p>
+          <p>📬 Check your email to verify your account.</p>
+        </div>
+      )}
       {error && <p className="text-center text-red-500">{error}</p>}
     </>
   );
