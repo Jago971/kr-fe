@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import AppTitle from "../components/AppTitle";
 import Footer from "../components/Footer";
+import DevSnippet from "../components/DevSnippet";
 
 const AuthLayout: React.FunctionComponent = () => {
   return (

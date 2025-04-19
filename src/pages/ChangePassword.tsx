@@ -1,50 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { authenticate, AuthError } from "../services/auth";
+import {
+  authenticate,
+  AuthError,
+  changePassword,
+  verifyEmail,
+} from "../services/auth";
 
 interface FormData {
-  username: string;
-  email: string;
   password: string;
   confirmPassword: string;
-  profile_pic: string;
 }
 
 const SignUp: React.FunctionComponent = () => {
   const clickedStyle = "shadow-none scale-95";
   const notClickedStyle = "shadow-md";
-  const profile_urls = [
-    "/public/profiles/bear.jpeg",
-    "/public/profiles/bird.jpeg",
-    "/public/profiles/cat.jpeg",
-    "/public/profiles/dog.jpeg",
-    "/public/profiles/fox.jpeg",
-    "/public/profiles/monkey.jpeg",
-    "/public/profiles/panda.jpeg",
-    "/public/profiles/rabbit.jpeg",
-  ];
 
   const navigate = useNavigate();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSignedUp, setIsSignedUp] = useState(false);
-  const [redirect, setRedirect] = useState(false);
   const [clicked, setClicked] = useState(false);
+  const [passwordIsChanged, setPasswordIsChanged] = useState(false);
   const [formData, setFormData] = useState<FormData>({
-    username: "",
-    email: "",
     password: "",
     confirmPassword: "",
-    profile_pic: "",
   });
-
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * profile_urls.length);
-    setFormData((prevData) => ({
-      ...prevData,
-      profile_pic: profile_urls[randomIndex],
-    }));
-  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -58,9 +38,10 @@ const SignUp: React.FunctionComponent = () => {
       setClicked(false);
     }, 100);
     setError(null);
-    setRedirect(false);
-    setIsSignedUp(false);
     setIsLoading(true);
+
+    const params = new URLSearchParams(location.search);
+    const token = params.get("token");
 
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
@@ -68,30 +49,20 @@ const SignUp: React.FunctionComponent = () => {
     }
 
     try {
-      const response = await authenticate("signup", {
-        username: formData.username,
-        email: formData.email,
+      const response = await changePassword({
         password: formData.password,
-        profile_pic: formData.profile_pic,
+        confirmPassword: formData.confirmPassword,
+        token: token as string,
       });
 
       alert(response?.message);
 
       if (response && response.status === "success") {
-        setIsSignedUp(true);
+        setPasswordIsChanged(true);
       }
     } catch (error) {
       if (error instanceof Error) {
-        if (error instanceof AuthError) {
-          if (error.status === 409) {
-            setRedirect(true);
-          } else {
-            setError(error.message);
-          }
-        } else {
-          // Regular error
-          setError(error.message);
-        }
+        setError(error.message);
       } else {
         setError("An unexpected error occurred.");
       }
@@ -106,24 +77,6 @@ const SignUp: React.FunctionComponent = () => {
         Sign Up
       </h1>
       <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-        <input
-          className="border rounded-lg p-2 border-neutral-800"
-          type="text"
-          name="username"
-          value={formData.username}
-          onChange={handleChange}
-          placeholder="Username"
-          required
-        />
-        <input
-          className="border rounded-lg p-2 border-neutral-800"
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          placeholder="Email"
-          required
-        />
         <input
           className="border rounded-lg p-2 border-neutral-800"
           type="password"
@@ -148,15 +101,14 @@ const SignUp: React.FunctionComponent = () => {
           }`}
           type="submit"
         >
-          {isLoading ? "Signing Up..." : isSignedUp ? "Signed up" : "Sign up"}
+          {isLoading ? "Changing password..." : passwordIsChanged ? "Password updated" : "Change password"}
         </button>
       </form>
-      {isSignedUp && !isLoading && (
+      {passwordIsChanged && !isLoading && (
         <div className="text-center text-neutral-800">
-          <p>✅ Account created!</p>
-          <p>📬 Check your email to verify your account.</p>
+          <p>✅ Password updated!</p>
           <p>
-            🔑 Then {""}
+            🔑 Now, using your new password, {""}
             <span
               className="underline cursor-pointer"
               onClick={() => navigate("/kind-remind/login")}
@@ -166,18 +118,6 @@ const SignUp: React.FunctionComponent = () => {
             .
           </p>
         </div>
-      )}
-      {redirect && !isLoading && (
-        <p className="text-center text-neutral-800">
-          You already have an account. You can {""}
-          <span
-            className="underline cursor-pointer"
-            onClick={() => navigate("/kind-remind/login")}
-          >
-            login here
-          </span>
-          .
-        </p>
       )}
 
       {error && <p className="text-center text-red-500">{error}</p>}

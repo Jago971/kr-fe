@@ -89,10 +89,40 @@ export const logout = async (): Promise<KindRemindResponse | void> => {
   return responseData;
 };
 
-export const verifyEmail = async ({ token }: { token: string }): Promise<KindRemindResponse | void> => {
-  const response = await fetch(`http://localhost:3002/kind-remind/verify-email?token=${token}`, {
-    method: "GET",
-  });
+export const verifyEmail = async ({
+  token,
+}: {
+  token: string;
+}): Promise<KindRemindResponse | void> => {
+  const response = await fetch(
+    `http://localhost:3002/kind-remind/verify-email?token=${token}`,
+    {
+      method: "GET",
+    }
+  );
+
+  const responseData = await response.json();
+  return responseData;
+};
+
+export const changePassword = async ({
+  password,
+  confirmPassword,
+  token,
+}: {
+  password: string;
+  confirmPassword: string;
+  token: string;
+}): Promise<KindRemindResponse | void> => {
+  if(password !== confirmPassword) {
+    throw new Error("Passwords do not match!");
+  }
+  const response = await fetch(
+    `http://localhost:3002/kind-remind/change-password?token=${token}`,
+    {
+      method: "GET",
+    }
+  );
 
   const responseData = await response.json();
   return responseData;
