@@ -69,12 +69,15 @@ const LogIn: React.FunctionComponent = () => {
 
   return (
     <>
-      <h1 className="p-2 text-center w-full max-w-md text-3xl border-b-2 border-neutral-800 text-neutral-800">
+      <h1 className="p-2 md:p-1 text-center w-full max-w-md text-3xl md:text-xl border-b-2 border-neutral-800 text-neutral-800">
         Log In
       </h1>
-      <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+      <form
+        className="flex flex-col items-center gap-4 md:gap-2"
+        onSubmit={handleSubmit}
+      >
         <input
-          className="border rounded-lg p-2 border-neutral-800"
+          className="w-full border rounded-lg p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
           type="text"
           name="username"
           value={formData.username}
@@ -83,7 +86,7 @@ const LogIn: React.FunctionComponent = () => {
           required
         />
         <input
-          className="border rounded-lg p-2 border-neutral-800"
+          className="w-full border rounded-lg p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
           type="password"
           name="password"
           value={formData.password}
@@ -93,15 +96,16 @@ const LogIn: React.FunctionComponent = () => {
         />
         <button
           type="submit"
-          className={`p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-lg shadow-md shadow-neutral-500 transition-all duration-50 ${
-            clicked ? clickedStyle : notClickedStyle
-          }`}
+          className={`w-full p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-lg shadow-md
+            shadow-neutral-500 transition-all duration-50 md:w-2/5 md:p-1 md:text-base md: mt-2 ${
+              clicked ? clickedStyle : notClickedStyle
+            }`}
         >
           {isLoading ? "Logging In..." : "Log in"}
         </button>
       </form>
       {!isUnverified && (
-        <p className="text-center text-neutral-800">
+        <p className="text-center text-neutral-800 md:text-xs">
           📝 Don't have an account?
           <Link to="/kind-remind/signup" className="underline cursor-pointer">
             Sign up

@@ -1,11 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  authenticate,
-  AuthError,
-  changePassword,
-  verifyEmail,
-} from "../services/auth";
+import { changePassword } from "../services/auth";
 
 interface FormData {
   password: string;
@@ -101,7 +96,11 @@ const SignUp: React.FunctionComponent = () => {
           }`}
           type="submit"
         >
-          {isLoading ? "Changing password..." : passwordIsChanged ? "Password updated" : "Change password"}
+          {isLoading
+            ? "Changing password..."
+            : passwordIsChanged
+            ? "Password updated"
+            : "Change password"}
         </button>
       </form>
       {passwordIsChanged && !isLoading && (

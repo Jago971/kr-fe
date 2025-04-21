@@ -6,10 +6,10 @@ import DevSnippet from "../components/DevSnippet";
 
 const AuthLayout: React.FunctionComponent = () => {
   return (
-    <div className="flex flex-col h-screen justify-center items-center p-16 gap-16 bg-orange-100">
+    <div className="flex flex-col h-screen justify-between items-center p-6 pb-4 md:p-4 md:pb-2 gap-4 bg-orange-100">
       <AppTitle />
-      <div className="w-full max-w-md flex flex-col gap-8">
-        <Outlet />
+      <div className="w-full max-w-md flex flex-col gap-4 overflow-auto">
+        <Outlet/>
       </div>
       <Footer />
     </div>
