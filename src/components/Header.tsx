@@ -12,16 +12,16 @@ export const Header = ({ data }: HeaderProps) => {
   const [clickedButton, setClickedButton] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const clickedStyle = "shadow-none scale-95";
-  const notClickedStyle = "shadow-md";
+  const notClickedStyle = "shadow-xs";
   const buttonStyle =
-    "border-2 border-neutral-800 text-neutral-800 rounded-lg shadow-md shadow-neutral-500 text-lg px-1";
-  const buttonInteract = " cursor-pointer transition-all duration-50";
+    "border-2 border-neutral-800 text-neutral-800 rounded-md shadow-neutral-500 text-lg px-1 md:rounded-sm md:text-xs md:py-0.5 md:px-1";
+  const buttonInteract = " cursor-pointer transition-all duration-150";
 
   const handleLogout = async () => {
     setClickedButton("logout");
     setTimeout(() => {
       setClickedButton(null);
-    }, 100);
+    }, 300);
 
     try {
       const response = await logout();
@@ -29,7 +29,7 @@ export const Header = ({ data }: HeaderProps) => {
         localStorage.removeItem("accessToken");
         setTimeout(() => {
           navigate(`/kind-remind/login`);
-        }, 150);
+        }, 300);
       }
     } catch (error) {
       setError("An error occurred while logging out.");
@@ -41,19 +41,19 @@ export const Header = ({ data }: HeaderProps) => {
     setClickedButton("edit");
     setTimeout(() => {
       setClickedButton(null);
-    }, 100);
+    }, 150);
     setTimeout(() => {
       navigate("/kind-remind/profile");
-    }, 150);
+    }, 300);
   };
 
   return (
     <>
           {console.log(data)}
-      <div className="flex items-center w-full h-40 max-w-md">
+      <div className="flex items-center w-full h-30 max-w-md md:h-20">
         <div className="flex w-full h-full items-center gap-2">
           <div
-            className="border rounded-full aspect-square h-full text-center bg-white border-b-3"
+            className="border rounded-full aspect-square h-full text-center bg-white"
             style={{
               backgroundImage: `url(${data.user.profile_pic})`,
               backgroundSize: "cover",
@@ -76,7 +76,7 @@ export const Header = ({ data }: HeaderProps) => {
               clickedButton === "edit" ? clickedStyle : notClickedStyle
             } bg-yellow-200 aspect-square flex items-center`}
           >
-            <TiPencil className="transform scale-130" />
+            <TiPencil className="transform scale-130 md:scale-120" />
           </button>
         </div>
         <button

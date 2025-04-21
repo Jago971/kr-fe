@@ -17,7 +17,7 @@ const Footer: React.FunctionComponent = () => {
   };
 
   const baseStyles =
-    "border-2 text-neutral-800 transition-all duration-300 px-1 rounded-lg text-lg md:text-xxs";
+    "border-2 text-neutral-800 transition-all duration-300 px-1 rounded-md text-lg md:text-xxs";
   const hoverStyles =
     "hover:border-neutral-800 hover:bg-yellow-200 hover:shadow-md hover:shadow-neutral-500";
   const clickStyles =

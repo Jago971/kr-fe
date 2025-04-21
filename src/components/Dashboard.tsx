@@ -17,9 +17,9 @@ const Dashboard = ({ activeComponent, data }: DashboardProps) => {
   };
 
   return (
-    <div className="border border-amber-600 h-full overflow-hidden">
+    <div className="border h-full overflow-hidden">
       <div
-        className={`w-[300%] border h-full border-b-blue-500 flex transition-transform duration-300 ${scrollComponent()}`}
+        className={`w-[300%] h-full flex transition-transform duration-300 ${scrollComponent()}`}
       >
         <div className="w-1/3 flex items-center justify-center">Home</div>
         <div className="w-1/3 flex items-center justify-center">Tasks</div>

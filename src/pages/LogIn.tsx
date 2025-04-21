@@ -77,7 +77,7 @@ const LogIn: React.FunctionComponent = () => {
         onSubmit={handleSubmit}
       >
         <input
-          className="w-full border rounded-lg p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
+          className="w-full border rounded-md p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
           type="text"
           name="username"
           value={formData.username}
@@ -86,7 +86,7 @@ const LogIn: React.FunctionComponent = () => {
           required
         />
         <input
-          className="w-full border rounded-lg p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
+          className="w-full border rounded-md p-2 border-neutral-800 md:p-1 md:px-2 md:text-xs md:rounded-sm"
           type="password"
           name="password"
           value={formData.password}
@@ -96,7 +96,7 @@ const LogIn: React.FunctionComponent = () => {
         />
         <button
           type="submit"
-          className={`w-full p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-lg shadow-md
+          className={`w-full p-2 border-2 border-neutral-800 text-neutral-800 bg-yellow-200 text-xl rounded-md shadow-md
             shadow-neutral-500 transition-all duration-50 md:w-2/5 md:p-1 md:text-base md: mt-2 ${
               clicked ? clickedStyle : notClickedStyle
             }`}

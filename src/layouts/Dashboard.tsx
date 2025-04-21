@@ -45,9 +45,9 @@ const DashboardLayout: React.FunctionComponent = () => {
   }, []);
 
   return (
-    <div className="flex flex-col items-center h-screen p-4 gap-4 bg-orange-100">
+    <div className="flex flex-col items-center h-screen p-6 gap-4 bg-orange-100 md:p-4 md:gap-2">
       {profileData ? <Header data={profileData.data.payload} /> : null}
-      <main className="border h-full w-full max-w-md">
+      <main className="h-full w-full max-w-md">
       {dashboardData ? <Dashboard activeComponent={currentPage} data={dashboardData?.data.payload} /> : null}
         
       </main>
