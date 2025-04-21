@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { verifyEmail } from "../services/auth";
 
 const VerifyEmail: React.FunctionComponent = () => {
@@ -38,27 +38,24 @@ const VerifyEmail: React.FunctionComponent = () => {
 
   return (
     <>
-      <h1 className="p-2 text-center w-full max-w-md text-3xl border-b-2 border-neutral-800 text-neutral-800">
+      <h1 className="p-2 md:p-1 text-center w-full max-w-md text-3xl md:text-xl border-b-2 border-neutral-800 text-neutral-800">
         Verify Email
       </h1>
 
-      <div className="text-center text-neutral-800">
+      <div className="text-center text-neutral-800 md:text-xs">
         {!isVerified ? (
           <p>Verifying email...</p>
         ) : (
           <p>
             Email verified! You can now {""}
-            <span
-              className="underline cursor-pointer"
-              onClick={() => navigate("/kind-remind/login")}
-            >
+            <Link to="/kind-remind/login" className="underline cursor-pointer">
               login here
-            </span>
+            </Link>
           </p>
         )}
       </div>
 
-      {error && <p className="text-center text-red-500">{error}</p>}
+      {error && <p className="text-center text-red-500 md:text-xs">{error}</p>}
     </>
   );
 };
